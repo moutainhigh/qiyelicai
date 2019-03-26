@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zillionfortune.t.dal.dao.ScoreDao" >
+  <resultMap id="BaseResultMap" type="com.zillionfortune.t.dal.entity.Score" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="subject_answer" property="subjectAnswer" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="grade_score_id" property="gradeScoreId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, member_id, subject_answer, score, grade_score_id, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.zillionfortune.t.dal.entity.Score">
+  	select 
+    <include refid="Base_Column_List" />
+    from score
+    <trim prefix="WHERE" prefixOverrides="and">
+      <if test="memberId != null" >
+        and member_id = #{memberId,jdbcType=VARCHAR}
+      </if>
+      <if test="subjectAnswer != null" >
+        and subject_answer = #{subjectAnswer,jdbcType=VARCHAR}
+      </if>
+      <if test="score != null" >
+        and score = #{score,jdbcType=INTEGER}
+      </if>
+      <if test="gradeScoreId != null" >
+        and grade_score_id = #{gradeScoreId,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from score
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zillionfortune.t.dal.entity.Score" >
+    insert into score (id, member_id, subject_answer, 
+      score, grade_score_id, create_time, 
+      modify_time)
+    values (#{id,jdbcType=BIGINT}, #{memberId,jdbcType=VARCHAR}, #{subjectAnswer,jdbcType=VARCHAR}, 
+      #{score,jdbcType=INTEGER}, #{gradeScoreId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zillionfortune.t.dal.entity.Score" >
+    insert into score
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="subjectAnswer != null" >
+        subject_answer,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="gradeScoreId != null" >
+        grade_score_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectAnswer != null" >
+        #{subjectAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="gradeScoreId != null" >
+        #{gradeScoreId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zillionfortune.t.dal.entity.Score" >
+    update score
+    <set >
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectAnswer != null" >
+        subject_answer = #{subjectAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="gradeScoreId != null" >
+        grade_score_id = #{gradeScoreId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zillionfortune.t.dal.entity.Score" >
+    update score
+    set member_id = #{memberId,jdbcType=VARCHAR},
+      subject_answer = #{subjectAnswer,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
+      grade_score_id = #{gradeScoreId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByMemberIdSelective" parameterType="com.zillionfortune.t.dal.entity.Score" >
+    update score
+    <set >
+      <if test="subjectAnswer != null" >
+        subject_answer = #{subjectAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="gradeScoreId != null" >
+        grade_score_id = #{gradeScoreId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where member_id = #{memberId,jdbcType=VARCHAR}
+  </update>
+</mapper>

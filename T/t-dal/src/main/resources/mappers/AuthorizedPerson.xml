@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zillionfortune.t.dal.dao.AuthorizedPersonDao" >
+ <resultMap id="BaseResultMap" type="com.zillionfortune.t.dal.entity.AuthorizedPerson" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="certificate_type" property="certificateType" jdbcType="TINYINT" />
+    <result column="certificate_no" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="certificate_expire_date" property="certificateExpireDate" jdbcType="TIMESTAMP" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="certificate_front_url" property="certificateFrontUrl" jdbcType="VARCHAR" />
+    <result column="certificate_back_url" property="certificateBackUrl" jdbcType="VARCHAR" />
+    <result column="authorization_url" property="authorizationUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, member_id, name, certificate_type, certificate_no, certificate_expire_date, mobile, status, 
+    create_time, modify_time, certificate_front_url, certificate_back_url, authorization_url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from authorized_person
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.zillionfortune.t.dal.entity.AuthorizedPerson">
+  	select 
+    <include refid="Base_Column_List" />
+    from authorized_person
+    <where>
+      <if test="memberId != null">
+        and member_id = #{memberId,jdbcType=VARCHAR}
+      </if>
+       <if test="status != null" >
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="certificateType != null" >
+        and certificate_type = #{certificateType,jdbcType=TINYINT}
+      </if>
+      <if test="certificateNo != null" >
+        and certificate_no = #{certificateNo,jdbcType=VARCHAR}
+      </if>
+      <if test="id != null" >
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="mobile != null" >
+        and mobile = #{mobile,jdbcType=VARCHAR}
+      </if>
+    </where>
+    <if test="pageStart != null and pageSize != null">
+    	LIMIT #{pageStart,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <select id="selectCountByCriteria" resultType="java.lang.Integer" parameterType="com.zillionfortune.t.dal.entity.AuthorizedPerson">
+  	select 
+  	count(1) as cnt
+    from authorized_person
+    <where>
+      <if test="memberId != null">
+        and member_id = #{memberId,jdbcType=VARCHAR}
+      </if>
+       <if test="status != null" >
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="certificateType != null" >
+        and certificate_type = #{certificateType,jdbcType=TINYINT}
+      </if>
+      <if test="certificateNo != null" >
+        and certificate_no = #{certificateNo,jdbcType=VARCHAR}
+      </if>
+      <if test="id != null" >
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="mobile != null" >
+        and mobile = #{mobile,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from authorized_person
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zillionfortune.t.dal.entity.AuthorizedPerson" >
+    insert into authorized_person (id, member_id, name, certificate_type, 
+      certificate_no, certificate_expire_date, 
+      mobile, status, create_time, 
+      modify_time, certificate_front_url, certificate_back_url, 
+      authorization_url)
+    values (#{id,jdbcType=BIGINT},  #{memberId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{certificateType,jdbcType=TINYINT}, 
+      #{certificateNo,jdbcType=VARCHAR}, #{certificateExpireDate,jdbcType=TIMESTAMP}, 
+      #{mobile,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, now(), 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{certificateFrontUrl,jdbcType=VARCHAR}, #{certificateBackUrl,jdbcType=VARCHAR}, 
+      #{authorizationUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.zillionfortune.t.dal.entity.AuthorizedPerson" >
+    insert into authorized_person
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="certificateType != null" >
+        certificate_type,
+      </if>
+      <if test="certificateNo != null" >
+        certificate_no,
+      </if>
+      <if test="certificateExpireDate != null" >
+        certificate_expire_date,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+        create_time,
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="certificateFrontUrl != null" >
+        certificate_front_url,
+      </if>
+      <if test="certificateBackUrl != null" >
+        certificate_back_url,
+      </if>
+      <if test="authorizationUrl != null" >
+        authorization_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateType != null" >
+        #{certificateType,jdbcType=TINYINT},
+      </if>
+      <if test="certificateNo != null" >
+        #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateExpireDate != null" >
+        #{certificateExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      now(),
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="certificateFrontUrl != null" >
+        #{certificateFrontUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateBackUrl != null" >
+        #{certificateBackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="authorizationUrl != null" >
+        #{authorizationUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zillionfortune.t.dal.entity.AuthorizedPerson" >
+    update authorized_person
+    <set >
+   	  <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateType != null" >
+        certificate_type = #{certificateType,jdbcType=TINYINT},
+      </if>
+      <if test="certificateNo != null" >
+        certificate_no = #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateExpireDate != null" >
+        certificate_expire_date = #{certificateExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+        modify_time = now(),
+      <if test="certificateFrontUrl != null" >
+        certificate_front_url = #{certificateFrontUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateBackUrl != null" >
+        certificate_back_url = #{certificateBackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="authorizationUrl != null" >
+        authorization_url = #{authorizationUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zillionfortune.t.dal.entity.AuthorizedPerson" >
+    update authorized_person
+    set  member_id = #{memberId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      certificate_type = #{certificateType,jdbcType=TINYINT},
+      certificate_no = #{certificateNo,jdbcType=VARCHAR},
+      certificate_expire_date = #{certificateExpireDate,jdbcType=TIMESTAMP},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = now(),
+      certificate_front_url = #{certificateFrontUrl,jdbcType=VARCHAR},
+      certificate_back_url = #{certificateBackUrl,jdbcType=VARCHAR},
+      authorization_url = #{authorizationUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="discardOtherAuthorizedPerson" parameterType="com.zillionfortune.t.dal.entity.AuthorizedPerson" >
+    update authorized_person
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+       modify_time = now(),
+    </set>
+    where member_id = #{memberId,jdbcType=VARCHAR} and id != #{id,jdbcType=BIGINT}
+  </update>
+  
+</mapper>
